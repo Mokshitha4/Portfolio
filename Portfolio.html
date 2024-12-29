@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Previous head, styles, and structure remain exactly the same until the Resume Page section -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Portfolio</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
+    <!-- Previous styles remain the same -->
+    <style>
+        /* All previous styles remain exactly the same */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+        }
+
+        header {
+            background-color: #333;
+            padding: 1rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #00ff9d;
+        }
+
+        main {
+            margin-top: 80px;
+            padding: 2rem;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .page {
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        /* Home Page styles remain the same */
+        .home {
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        .profile-image {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            margin: 0 auto 2rem;
+            background-color: #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .about-me {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: left;
+            line-height: 1.6;
+        }
+
+        /* Resume Page */
+        .resume {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .pdf-container {
+            width: 100%;
+            height: 800px;
+            border: 1px solid #ddd;
+            margin-top: 1rem;
+        }
+
+        #pdf-render {
+            width: 100%;
+            height: 100%;
+        }
+
+        .loading-message {
+            text-align: center;
+            padding: 2rem;
+            font-size: 1.2rem;
+            color: #666;
+        }
+
+        /* Projects Page styles remain the same */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+        }
+
+        /* Experience Page styles remain the same */
+        .experience-timeline {
+            position: relative;
+            padding: 2rem 0;
+        }
+
+        .experience-item {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                gap: 1rem;
+            }
+
+            main {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header remains the same -->
+    <header>
+        <nav>
+            <div class="logo">Portfolio</div>
+            <div class="nav-links">
+                <a href="#" data-page="home">Home</a>
+                <a href="#" data-page="resume">Resume</a>
+                <a href="#" data-page="projects">Projects</a>
+                <a href="#" data-page="experience">Experience</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Home Page content remains the same -->
+        <div id="home" class="page active">
+            <div class="home">
+                
+                <h1>Mokshitha Mandadi</h1>
+                <div class="about-me">
+                    <h3>About Me</h3>
+                    <p>Hello! In Spring 2025, I will begin my Master's in Computer Science at Virginia Tech. I am passionate about artificial intelligence and machine learning, particularly the recent advances in generative AI. I believe in leveraging technology for social good. </p>   
+                    <p>At Virginia Tech, I am excited to explore AI and ML further, focusing on developing innovative solutions. In my free time, I enjoy painting, binge-watching shows, and hiking. I look forward to the opportunities to learn, grow, and contribute to the field of computer science.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modified Resume Page -->
+        <div id="resume" class="page">
+            <div class="resume">
+                <h2>Resume</h2>
+                <div class="pdf-container">
+                    <div id="loading-message" class="loading-message">Loading resume...</div>
+                    <canvas id="pdf-render"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Projects Page content remains the same -->
+        <div id="projects" class="page">
+            <div class="projects-grid">
+                <div class="project-card">
+                    <h3>Road Safety Enforcement System Using Deep Learning and Computer Vision</h3>
+                    <p>Developed a deep learning-based integrated system for vehicle detection, helmet violation detection, and vehicle emission detection. to
+                        ensure road safety and pollution control by experimenting with YOLOv5, YOLOv7, YOLOv8, YOLOv9, and TrOCR models and final
+                        integrating them with the Django framework.
+                        Achieved remarkable results with a maximum mean average precision (mAP) of 69% for vehicle emission detection, 88% for number plate
+                        detection, 83% for helmet detection using YOLOv9, and 86.5% for vehicle detection using YOLOv8.</p>
+                </div>
+                <div class="project-card">
+                    <h3>Brand Name Generator for Drugs</h3>
+                    <p> Engineered an NLP tool powered by Gated Recurrent Unit (GRU) a type of recurrent neural network (RNN), to swiftly generate brand names
+                        that are unique for pharmaceutical drugs.
+                        Optimized the model using the Adam optimizer, which resulted in an accuracy of 90 percent.</p>
+                </div>
+                <div class="project-card">
+                    <h3>Book Recommendation System</h3>
+                    <p>Designed a book recommendation system using a hybrid approach that combines K-means clustering and KNN algorithms.
+                    The system performed with precision of 83% and a recall of 80%. It also accurately generated tailored book recommendations based on user
+                        interests and book ratings, ensuring an accurate and personalized reading experience.</p>
+                </div>
+                <div class="project-card">
+                    <h3>Sentimental Analysis on Twitter Data</h3>
+                    <p>
+                        Conducted extensive experiments in sentiment analysis on Twitter data, exploring diverse machine learning and deep learning algorithms
+                        such as Naive Bayes, Random Forest, SVM, KNN, CNN, and LSTM.
+                        Results: Bag of Words achieved 71% accuracy with SVM (linear) and 70% with Random Forest. TF-IDF yielded 0.69 with SVM (linear) and
+                        0.68 with Random Forest. FastText hit 70% with SVM. Advanced models impressed, with CNN delivering 93% accuracy, while LSTM soared
+                        to an impressive 95%, showcasing deep learning's efficacy in capturing sentiment nuances on Twitter/p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Experience Page content remains the same -->
+        <div id="experience" class="page">
+            <div class="experience-timeline">
+                <div class="experience-item">
+                    <h2>Hexagon Capability Center India</h2>
+                    <h3> Software Developer | May 2024 - Dec 2024</h3>
+                    <h3> Software Developer Intern| Aug 2023 - April 2024</h3><br>
+                    <p>● Developed SDX copilot(a multi-agent AI framework) using Langchain, Langgraph, Fast API which automates the process of creating SDX
+                        workflow
+                    </p><p> ● Contributed to another multi-agent AI chatbot project called "The Machine". Optimized execution time by developing a supervisor architecture with parallel processing in multi-agent execution.
+                    </p><p> ● Revamped database schema to streamline operations on the database by identifying and removing redundancy and duplicates.
+                    </p><p> ● Developed a versatile full-stack website using Django, allowing administrators to create customizable forms dynamically. Users can
+                        effortlessly fill out and update these forms, with the data automatically stored in a backend databas
+                    </p><p> ● Designed Power BI dashboards for organisation technology stacks</p>
+                </div>
+                <div class="experience-item">
+                    <h2>Barclays Global Service Center </h2>
+                    <h3>Technology Intern  |  June 2023 - Aug 2023</h3><br>
+                    <p> ● Crafted a user-friendly visualization tool using Flask REST framework, leveraging open-source technologies.
+                    </p><p>   ● Enabled automated syncing of production and disaster recovery databases using Python scripts, with real-time alerts for seamless
+                        monitoring. And implemented size alert notifications for the database schemas.</p>
+                </div>
+                <div class="experience-item">
+                    <h2>Panace.ai </h2>
+                    <h3>Project Intern  |  Sep 2022 - Nov 2022</h3><br>
+                    <p> ● Developed a flask-based text-to-speech app with 30 different voices, fostering natural and engaging interactions in healthcare setting
+                    </p><p>● The project explores open-source APIs (Mozilla TTS, Pyttsx3, Tacotron 2, and WaveGlow models, Text to Emotion API) for simulating
+                        conversations and varying voices, enhancing accessibility and emotional nuances in communication, with added consideration for emoticons.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Navigation handling remains the same
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const pageId = link.getAttribute('data-page');
+                
+                // Hide all pages
+                document.querySelectorAll('.page').forEach(page => {
+                    page.classList.remove('active');
+                });
+                
+                // Show selected page
+                document.getElementById(pageId).classList.add('active');
+
+                // Load PDF when resume page is opened
+                if (pageId === 'resume') {
+                    loadPDF();
+                }
+            });
+        });
+
+        // Modified PDF handling for direct URL
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js';
+
+        async function loadPDF() {
+            const pdfUrl = './ResumeMokshitha.pdf'; // Replace with your PDF URL
+            const loadingMessage = document.getElementById('loading-message');
+
+            try {
+                const pdf = await pdfjsLib.getDocument(pdfUrl).promise;
+                const page = await pdf.getPage(1);
+                
+                const canvas = document.getElementById('pdf-render');
+                const context = canvas.getContext('2d');
+                
+                const viewport = page.getViewport({ scale: 1.5 });
+                canvas.height = viewport.height;
+                canvas.width = viewport.width;
+                
+                await page.render({
+                    canvasContext: context,
+                    viewport: viewport
+                }).promise;
+
+                // Hide loading message after successful render
+                loadingMessage.style.display = 'none';
+            } catch (error) {
+                console.error('Error loading PDF:', error);
+                loadingMessage.textContent = 'Error loading resume. Please try again later.';
+            }
+        }
+    </script>
+</body>
+</html>
